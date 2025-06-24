@@ -10,44 +10,7 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script>
-document.addEventListener('DOMContentLoaded', function () {
-  const ctx = document.getElementById('currentProductionConsumptionBarChart');
-  const chart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: ['Production', 'Consumption'],
-      datasets: [{
-        label: 'by kW',
-        data: [0, 0],
-        backgroundColor: ['#4caf50', '#f44336'],
-        borderWidth: 1
-      }]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
-    }
-  });
-
-  async function updateChart() {
-    try {
-      const response = await fetch('/api/data');
-      const data = await response.json();
-      chart.data.datasets[0].data = [data.production_value, data.consumption_value];
-      chart.update();
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  }
-
-  updateChart(); // initial
-  setInterval(updateChart, 10000); // every 10 sec
-});
-</script>
+  <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
 
 </body>
 </html>
