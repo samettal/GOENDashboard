@@ -6,20 +6,21 @@
 </head>
 <body>
   <div>
-  <canvas id="currentProductionConsumptionBarChart"></canvas>
+    <canvas id="currentProductionConsumptionBarChart"></canvas>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
+document.addEventListener('DOMContentLoaded', function () {
   const ctx = document.getElementById('currentProductionConsumptionBarChart');
-
-  new Chart(ctx, {
+  const chart = new Chart(ctx, {
     type: 'bar',
     data: {
       labels: ['Production', 'Consumption'],
       datasets: [{
         label: 'by kW',
-        data: [15, 24],
+        data: [0, 0],
+        backgroundColor: ['#4caf50', '#f44336'],
         borderWidth: 1
       }]
     },
@@ -31,6 +32,22 @@
       }
     }
   });
-  </script>
+
+  async function updateChart() {
+    try {
+      const response = await fetch('/api/data');
+      const data = await response.json();
+      chart.data.datasets[0].data = [data.production_value, data.consumption_value];
+      chart.update();
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }
+
+  updateChart(); // initial
+  setInterval(updateChart, 10000); // every 10 sec
+});
+</script>
+
 </body>
 </html>
