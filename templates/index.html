@@ -1,4 +1,28 @@
-<!doctype html>
-<title>Hello from Flask</title>
-<h1>Hello, World!</h1>
-<h2>This is the main page of the website</h2>
+<div>
+  <canvas id="myChart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  const ctx = document.getElementById('myChart');
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Production', 'Consumption'],
+      datasets: [{
+        label: 'by kW',
+        data: [15, 24],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script>
