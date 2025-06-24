@@ -1,4 +1,5 @@
 from flask import Flask
+from flask import render_template
 from SyntheticValueGenerator import SyntheticValueGenerator
 from DatabaseManager import DatabaseManager
 
@@ -18,7 +19,7 @@ class FlaskApp:
         self.app.route("/")(self.main_page)
 
     def main_page(self):
-        return "Hello World"
+        return render_template("index.html")
 
     def run(self, **kwargs):
         self.app.run(**kwargs)
