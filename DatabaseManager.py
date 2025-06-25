@@ -13,6 +13,10 @@ class DatabaseManager:
     INSERT_INTO_ENERGY_STATUS = '''INSERT INTO EnergyStatus(Date, Time, Production, Consumption, Balance)
                             VALUES(?, ?, ?, ?, ?)'''
 
+    # This select query selects last 10 values by date and time (select the newest values).
+    SELECT_LAST_10_DATA = '''SELECT Time, Production, Consumption FROM EnergyStatus ORDER BY CONCAT(Date, ' ', Time) 
+                        DESC LIMIT 10;'''
+
     def __init__(self):
         self.db_path = "EnergyDatabase.db"
 
@@ -24,4 +28,18 @@ class DatabaseManager:
         with sqlite3.connect(self.db_path) as con:
             con.execute(self.INSERT_INTO_ENERGY_STATUS, (date, time, production_value, consumption_value, balance))
             con.commit()
+
+    def select_last_x_data(self, number_of_data):
+        with sqlite3.connect(self.db_path) as con:
+            cur = con.cursor()
+            cur.execute(self.SELECT_LAST_10_DATA)
+
+            select_results = cur.fetchall()
+            select_results.reverse()  # Reverse to get oldest first
+
+            last_x_times = [row[0] for row in select_results]
+            last_x_production_values = [row[1] for row in select_results]
+            last_x_consumption_values = [row[2] for row in select_results]
+
+        return last_x_times, last_x_production_values, last_x_consumption_values
 

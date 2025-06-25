@@ -16,6 +16,7 @@ class SyntheticValueGenerator:
     def _generate_random_value(self):
         return random.randint(0, 2000)
 
+    # TODO: This _run_periodic() method can be divided into target-focused methods.
     def _run_periodic(self):
         current_date_time = datetime.datetime.now()
         date_converted = current_date_time.strftime("%d/%m/%Y")
