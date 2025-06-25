@@ -27,7 +27,9 @@ class FlaskApp:
 
         return jsonify({
             "production_value": production_value,
-            "consumption_value": consumption_value
+            "consumption_value": consumption_value,
+            "last_10_values_production": self.synthetic_value_generator.last_10_values_production,
+            "last_10_values_consumption": self.synthetic_value_generator.last_10_values_consumption
         })
 
     def run(self, **kwargs):
