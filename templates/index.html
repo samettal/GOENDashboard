@@ -6,23 +6,26 @@
 </head>
 <body>
   <link rel="stylesheet" href="/static/css/header_style.css">
+  <link rel="stylesheet" href="/static/css/charts_style.css">
   <div class="header" align="center">
   <div class="header-content">
     <img src="/static/images/logo.png" alt="GOEN Logo" class="logo">
-    <h1 class="title">Solar Panel Energy Production Dashboard</h1>
+    <h1 class="title">Energy Production Dashboard</h1>
   </div>
   </div>
 
-  <div> <!--CHARTS-->
-    <div> <!--CHART 1: RECENT VALUES (LINE CHART)-->
-      Real-Time Energy Monitoring
-      <canvas id="last10ValuesProductionLineChart"></canvas>
+  <!--CHARTS-->
+  <div class="charts-container">
+    <div class="chart-section">
+      <p class="chart-title">Real-Time Energy Monitoring</p>
+      <canvas id="last10ValuesProductionConsumptionLineChart"></canvas>
     </div>
-    <div> <!--CHART 2: DAILY VALUES (BAR CHART)-->
-      Daily Monitoring
+    <div class="chart-section">
+      <p class="chart-title">Daily Monitoring</p>
       <canvas id="dailyMonitoring"></canvas>
     </div>
   </div>
+
     <div> <!--DATA IN TEXT FORMAT-->
       <!--DATA 1: Current Balance in kW-->
       <!--DATA 2: Last 1 Hour Balance in kW-->

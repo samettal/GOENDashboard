@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  const ctx2 = document.getElementById('last10ValuesProductionLineChart');
+  const ctx2 = document.getElementById('last10ValuesProductionConsumptionLineChart');
   const lineChartProduction = new Chart(ctx2, {
     type: 'line',
     data: {

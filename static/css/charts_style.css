@@ -1,0 +1,18 @@
+.charts-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* left align */
+  padding-left: 40px;
+  padding-top: 20px;
+}
+
+.chart-section {
+  margin-bottom: 40px;
+}
+
+.chart-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
