@@ -63,6 +63,27 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
+//  const ctx4 = document.getElementById('');
+//  const lineChartConsumption = new Chart(ctx3, {
+//    type: 'line',
+//    data: {
+//      labels: [],
+//      datasets: [{
+//        label: 'Consumption kW',
+//        data: [],
+//        backgroundColor: ['#4caf50'],
+//        borderWidth: 1
+//      }]
+//    },
+//    options: {
+//      scales: {
+//        y: {
+//          beginAtZero: true
+//        }
+//      }
+//    }
+//  });
+
   async function updateCharts() {
     try {
       const response = await fetch('/api/data');
