@@ -4,14 +4,16 @@ import sqlite3
 class DatabaseManager:
     CREATE_TABLE_ENERGY_STATUS = '''CREATE TABLE IF NOT EXISTS EnergyStatus
                             (ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                            Date TEXT,
-                            Time TEXT,
+                            Timestamp INTEGER,
                             Production INTEGER,
                             Consumption INTEGER,
                             Balance INTEGER)'''
 
-    INSERT_INTO_ENERGY_STATUS = '''INSERT INTO EnergyStatus(Date, Time, Production, Consumption, Balance)
-                            VALUES(?, ?, ?, ?, ?)'''
+    INSERT_INTO_ENERGY_STATUS = '''INSERT INTO EnergyStatus(TimeStamp, Production, Consumption, Balance)
+                            VALUES(?, ?, ?, ?)'''
+
+    DAILY_BALANCE_VALUE = '''SELECT SUM(Production) - SUM(Consumption) FROM EnergyStatus WHERE 
+                            Timestamp > strftime('%s', 'now', '-1 day');'''
 
     # This select query selects last 10 values by date and time (select the newest values).
     SELECT_LAST_10_DATA = '''SELECT Time, Production, Consumption FROM EnergyStatus ORDER BY CONCAT(Date, ' ', Time) 
@@ -24,9 +26,9 @@ class DatabaseManager:
             con.execute(self.CREATE_TABLE_ENERGY_STATUS)
             con.commit()
 
-    def insert_energy_values(self, date, time, production_value, consumption_value, balance):
+    def insert_energy_values(self, timestamp, production_value, consumption_value, balance):
         with sqlite3.connect(self.db_path) as con:
-            con.execute(self.INSERT_INTO_ENERGY_STATUS, (date, time, production_value, consumption_value, balance))
+            con.execute(self.INSERT_INTO_ENERGY_STATUS, (timestamp, production_value, consumption_value, balance))
             con.commit()
 
     def select_last_x_data(self, number_of_data):
@@ -43,3 +45,10 @@ class DatabaseManager:
 
         return last_x_times, last_x_production_values, last_x_consumption_values
 
+    def get_daily_balance(self):
+        with sqlite3.connect(self.db_path) as con:
+            cur = con.cursor()
+            cur.execute(self.DAILY_BALANCE_VALUE)
+
+
+        return cur.fetchall()[0][0]

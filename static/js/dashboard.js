@@ -1,7 +1,7 @@
 // bar graph javascript functions
 document.addEventListener('DOMContentLoaded', function () {
   const ctx1 = document.getElementById('currentProductionConsumptionBarChart');
-  const barChart = new Chart(ctx1, {
+  const barChartCurrentProductionConsumption = new Chart(ctx1, {
     type: 'bar',
     data: {
       labels: ['Production', 'Consumption'],
@@ -21,49 +21,28 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  const ctx2 = document.getElementById('currentProductionLineChart');
-  const lineChartProduction = new Chart(ctx2, {
-    type: 'line',
-    data: {
-      labels: [],
-      datasets: [{
-        label: 'Production kW',
-        data: [],
-        backgroundColor: ['#4caf50'],
-        borderWidth: 1
-      }]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
-    }
-  });
-
-  const ctx3 = document.getElementById('currentConsumptionLineChart');
-  const lineChartConsumption = new Chart(ctx3, {
-    type: 'line',
-    data: {
-      labels: [],
-      datasets: [{
-        label: 'Consumption kW',
-        data: [],
-        backgroundColor: ['#4caf50'],
-        borderWidth: 1
-      }]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
-    }
-  });
-
-//  const ctx4 = document.getElementById('');
+//  const ctx2 = document.getElementById('currentProductionLineChart');
+//  const lineChartProduction = new Chart(ctx2, {
+//    type: 'line',
+//    data: {
+//      labels: [],
+//      datasets: [{
+//        label: 'Production kW',
+//        data: [],
+//        backgroundColor: ['#4caf50'],
+//        borderWidth: 1
+//      }]
+//    },
+//    options: {
+//      scales: {
+//        y: {
+//          beginAtZero: true
+//        }
+//      }
+//    }
+//  });
+//
+//  const ctx3 = document.getElementById('currentConsumptionLineChart');
 //  const lineChartConsumption = new Chart(ctx3, {
 //    type: 'line',
 //    data: {
@@ -84,18 +63,41 @@ document.addEventListener('DOMContentLoaded', function () {
 //    }
 //  });
 
+  const ctx4 = document.getElementById('dailyBalanceBarChart');
+  const barChartDailyBalance = new Chart(ctx4, {
+    type: 'bar',
+    data: {
+      labels: ['Balance'],
+      datasets: [{
+        label: 'Daily Balance by kW',
+        data: [],
+        backgroundColor: ['#4caf50'],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
   async function updateCharts() {
     try {
       const response = await fetch('/api/data');
       const data = await response.json();
-      barChart.data.datasets[0].data = [data.production_value, data.consumption_value];
-      barChart.update();
-      lineChartProduction.data.datasets[0].data = data.last_10_values_production
-      lineChartProduction.data.labels = data.last10_times
-      lineChartProduction.update();
-      lineChartConsumption.data.datasets[0].data = data.last_10_values_consumption
-      lineChartConsumption.data.labels = data.last10_times
-      lineChartConsumption.update();
+      barChartCurrentProductionConsumption.data.datasets[0].data = [data.production_value, data.consumption_value];
+      barChartCurrentProductionConsumption.update();
+//      lineChartProduction.data.datasets[0].data = data.last_10_values_production
+//      lineChartProduction.data.labels = data.last10_times
+//      lineChartProduction.update();
+//      lineChartConsumption.data.datasets[0].data = data.last_10_values_consumption
+//      lineChartConsumption.data.labels = data.last10_times
+//      lineChartConsumption.update();
+      barChartDailyBalance.data.datasets[0].data = [data.daily_balance_value]
+      barChartDailyBalance.update();
     } catch (error) {
       console.error("Error fetching data:", error);
     }
