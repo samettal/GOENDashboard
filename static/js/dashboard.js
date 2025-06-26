@@ -1,5 +1,6 @@
 // bar graph javascript functions
 document.addEventListener('DOMContentLoaded', function () {
+
   const ctx1 = document.getElementById('currentProductionConsumptionBarChart');
   const barChartCurrentProductionConsumption = new Chart(ctx1, {
     type: 'bar',
@@ -29,29 +30,18 @@ document.addEventListener('DOMContentLoaded', function () {
       datasets: [{
         label: 'Production kW',
         data: [],
-        backgroundColor: ['#4caf50'],
-        borderWidth: 1
-      }]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
-    }
-  });
-
-  const ctx3 = document.getElementById('last10ValuesConsumptionLineChart');
-  const lineChartConsumption = new Chart(ctx3, {
-    type: 'line',
-    data: {
-      labels: [],
-      datasets: [{
+        fill: 'origin',
+        backgroundColor: ['rgba(75, 220, 192, 0.3)'],
+        borderWidth: 3,
+        borderColor: 'rgb(75, 220, 192)',
+      },
+      {
         label: 'Consumption kW',
         data: [],
-        backgroundColor: ['#4caf50'],
-        borderWidth: 1
+        fill: 'origin',
+        backgroundColor: ['rgba(240, 15, 20, 0.3)'],
+        borderWidth: 3,
+        borderColor: 'rgb(240, 15, 20)'
       }]
     },
     options: {
@@ -94,11 +84,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
       lineChartProduction.data.datasets[0].data = data.last_10_values_production
       lineChartProduction.data.labels = data.last_10_timestamps
+      lineChartProduction.data.datasets[1].data = data.last_10_values_consumption
       lineChartProduction.update();
-
-      lineChartConsumption.data.datasets[0].data = data.last_10_values_consumption
-      lineChartConsumption.data.labels = data.last_10_timestamps
-      lineChartConsumption.update();
 
       barChartDailyBalance.data.datasets[0].data = [data.daily_balance_value]
       barChartDailyBalance.update();
