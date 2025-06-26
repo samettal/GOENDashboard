@@ -21,47 +21,47 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-//  const ctx2 = document.getElementById('currentProductionLineChart');
-//  const lineChartProduction = new Chart(ctx2, {
-//    type: 'line',
-//    data: {
-//      labels: [],
-//      datasets: [{
-//        label: 'Production kW',
-//        data: [],
-//        backgroundColor: ['#4caf50'],
-//        borderWidth: 1
-//      }]
-//    },
-//    options: {
-//      scales: {
-//        y: {
-//          beginAtZero: true
-//        }
-//      }
-//    }
-//  });
-//
-//  const ctx3 = document.getElementById('currentConsumptionLineChart');
-//  const lineChartConsumption = new Chart(ctx3, {
-//    type: 'line',
-//    data: {
-//      labels: [],
-//      datasets: [{
-//        label: 'Consumption kW',
-//        data: [],
-//        backgroundColor: ['#4caf50'],
-//        borderWidth: 1
-//      }]
-//    },
-//    options: {
-//      scales: {
-//        y: {
-//          beginAtZero: true
-//        }
-//      }
-//    }
-//  });
+  const ctx2 = document.getElementById('last10ValuesProductionLineChart');
+  const lineChartProduction = new Chart(ctx2, {
+    type: 'line',
+    data: {
+      labels: [],
+      datasets: [{
+        label: 'Production kW',
+        data: [],
+        backgroundColor: ['#4caf50'],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+  const ctx3 = document.getElementById('last10ValuesConsumptionLineChart');
+  const lineChartConsumption = new Chart(ctx3, {
+    type: 'line',
+    data: {
+      labels: [],
+      datasets: [{
+        label: 'Consumption kW',
+        data: [],
+        backgroundColor: ['#4caf50'],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
 
   const ctx4 = document.getElementById('dailyBalanceBarChart');
   const barChartDailyBalance = new Chart(ctx4, {
@@ -88,16 +88,21 @@ document.addEventListener('DOMContentLoaded', function () {
     try {
       const response = await fetch('/api/data');
       const data = await response.json();
+
       barChartCurrentProductionConsumption.data.datasets[0].data = [data.production_value, data.consumption_value];
       barChartCurrentProductionConsumption.update();
-//      lineChartProduction.data.datasets[0].data = data.last_10_values_production
-//      lineChartProduction.data.labels = data.last10_times
-//      lineChartProduction.update();
-//      lineChartConsumption.data.datasets[0].data = data.last_10_values_consumption
-//      lineChartConsumption.data.labels = data.last10_times
-//      lineChartConsumption.update();
+
+      lineChartProduction.data.datasets[0].data = data.last_10_values_production
+      lineChartProduction.data.labels = data.last_10_timestamps
+      lineChartProduction.update();
+
+      lineChartConsumption.data.datasets[0].data = data.last_10_values_consumption
+      lineChartConsumption.data.labels = data.last_10_timestamps
+      lineChartConsumption.update();
+
       barChartDailyBalance.data.datasets[0].data = [data.daily_balance_value]
       barChartDailyBalance.update();
+
     } catch (error) {
       console.error("Error fetching data:", error);
     }

@@ -24,15 +24,15 @@ class FlaskApp:
     def current_data(self):
         production_value = self.synthetic_value_generator.production_value
         consumption_value = self.synthetic_value_generator.consumption_value
-        # last10_times, last10_production_values, last10_consumption_values = self.db_manager.select_last_x_data(10)
+        last_10_timestamps, last_10_values_production, last_10_values_consumption = self.db_manager.select_last_10_data()
         daily_balance = self.db_manager.get_daily_balance()
 
         return jsonify({
             "production_value": production_value,
             "consumption_value": consumption_value,
-            # "last10_times": last10_times,
-            # "last_10_values_production": last10_production_values,
-            # "last_10_values_consumption": last10_consumption_values,
+            "last_10_timestamps": last_10_timestamps,
+            "last_10_values_production": last_10_values_production,
+            "last_10_values_consumption": last_10_values_consumption,
             "daily_balance_value": daily_balance
         })
 
