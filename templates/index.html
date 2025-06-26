@@ -5,11 +5,32 @@
   <title>GOEN Energy Production Dashboard</title>
 </head>
 <body>
-  <div>
-    <canvas id="currentProductionConsumptionBarChart"></canvas>
-    <canvas id="last10ValuesProductionLineChart"></canvas>
-    <canvas id="dailyBalanceBarChart"></canvas>
+  <link rel="stylesheet" href="/static/css/header_style.css">
+  <div class="header" align="center">
+  <div class="header-content">
+    <img src="/static/images/logo.png" alt="GOEN Logo" class="logo">
+    <h1 class="title">Solar Panel Energy Production Dashboard</h1>
   </div>
+  </div>
+
+  <div> <!--CHARTS-->
+    <div> <!--CHART 1: RECENT VALUES (LINE CHART)-->
+      Real-Time Energy Monitoring
+      <canvas id="last10ValuesProductionLineChart"></canvas>
+    </div>
+    <div> <!--CHART 2: DAILY VALUES (BAR CHART)-->
+      Daily Monitoring
+      <canvas id="dailyMonitoring"></canvas>
+    </div>
+  </div>
+    <div> <!--DATA IN TEXT FORMAT-->
+      <!--DATA 1: Current Balance in kW-->
+      <!--DATA 2: Last 1 Hour Balance in kW-->
+      <!--DATA 3: Today's Balance in kW-->
+      <!--DATA 4: Last 24 Hours in kW-->
+    </div>
+    <canvas id="currentProductionConsumptionBarChart"></canvas>
+    <canvas id="dailyBalanceBarChart"></canvas>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>

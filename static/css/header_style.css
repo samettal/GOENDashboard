@@ -1,0 +1,26 @@
+.header {
+  padding: 30px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 900px;
+  gap: 20px;
+  text-align: center;
+}
+
+.logo {
+  height: 70px;
+  border-radius: 8px;
+}
+
+.title {
+  font-size: 34px;
+  font-weight: 700;
+  margin: 0;
+  color: #33AAAA;
+}
