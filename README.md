@@ -1,21 +1,21 @@
 ### Used Technologies:
-Python3
-SQLite
-HTML 5
-Javascript and Chart.js library
+Python3 <br />
+SQLite <br />
+HTML 5 <br />
+Javascript and Chart.js library <br />
 
 ### How To Run
-Python3 should be installed on the computer.
-Internet connection
+Python3 should be installed on the computer. <br />
+Internet connection <br />
 
 ## RUN:
-git clone https://github.com/samettal/GOENDashboard.git
-cd GOENDashboard
-python3 -m venv .venv
-source ./.venv/bin/activate
-pip install -r ./requirements.txt
-pip list
-(Now if you are seeing your python packages then the program is ready to run)
-python3 ./app.py
-(At first no data will be displayed. But after 10 seconds new data will be added)
+git clone https://github.com/samettal/GOENDashboard.git <br />
+cd GOENDashboard <br />
+python3 -m venv .venv <br />
+source ./.venv/bin/activate <br />
+pip install -r ./requirements.txt <br />
+pip list <br />
+(Now if you are seeing your python packages then the program is ready to run) <br />
+python3 ./app.py <br />
+(At first no data will be displayed. But after 10 seconds new data will be added) <br />
 
