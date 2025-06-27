@@ -8,7 +8,7 @@ Javascript and Chart.js library <br />
 Python3 should be installed on the computer. <br />
 Internet connection <br />
 
-## RUN:
+#### RUN:
 git clone https://github.com/samettal/GOENDashboard.git <br />
 cd GOENDashboard <br />
 python3 -m venv .venv <br />
