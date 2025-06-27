@@ -61,10 +61,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-// Add this function to format the values (kW or mW)
+// Add this function to format the values (kW or MW)
 function formatPowerValue(value) {
   if (value >= 10000) {
-    return (value / 1000).toFixed(1) + ' mW';
+    return (value / 1000).toFixed(1) + ' MW';
   }
   return value.toFixed(1) + ' kW';
 }
