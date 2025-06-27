@@ -14,25 +14,62 @@
   </div>
   </div>
 
-  <!--CHARTS-->
-  <div class="charts-container">
-    <div class="chart-section">
-      <canvas id="recentValuesLineChart" width="700" height="350"></canvas>
+  <div class="main-container">
+    <!--CHARTS-->
+    <div class="charts-container">
+      <div class="chart-section">
+        <canvas id="recentValuesLineChart" width="700" height="350"></canvas>
+      </div>
+
+      <div class="chart-section">
+        <canvas id="yesterdayBalanceBarChart" width="700" height="350"></canvas>
+      </div>
     </div>
 
-    <div class="chart-section">
-      <canvas id="yesterdayBalanceBarChart" width="700" height="350"></canvas>
+    <!--DATA SECTION-->
+    <div class="data-container">
+      <div class="data-card">
+        <h3>Current Balance</h3>
+        <div id="currentBalance" class="data-value">--</div>
+      </div>
+
+      <div class="data-card">
+        <h3>Last 1 Hour</h3>
+        <div class="data-row">
+          <span>Production:</span>
+          <span id="last1HourProduction" class="positive">--</span>
+        </div>
+        <div class="data-row">
+          <span>Consumption:</span>
+          <span id="last1HourConsumption" class="negative">--</span>
+        </div>
+      </div>
+
+      <div class="data-card">
+        <h3>Today</h3>
+        <div class="data-row">
+          <span>Production:</span>
+          <span id="todayProduction" class="positive">--</span>
+        </div>
+        <div class="data-row">
+          <span>Consumption:</span>
+          <span id="todayConsumption" class="negative">--</span>
+        </div>
+      </div>
+
+      <div class="data-card">
+        <h3>Last 24 Hours</h3>
+        <div class="data-row">
+          <span>Production:</span>
+          <span id="last24HoursProduction" class="positive">--</span>
+        </div>
+        <div class="data-row">
+          <span>Consumption:</span>
+          <span id="last24HoursConsumption" class="negative">--</span>
+        </div>
+      </div>
     </div>
   </div>
-
-    <div> <!--DATA IN TEXT FORMAT-->
-      <!--DATA 1: Current Balance in kW-->
-      <!--DATA 2: Last 1 Hour Balance in kW-->
-      <!--DATA 3: Today's Balance in kW-->
-      <!--DATA 4: Last 24 Hours in kW-->
-    </div>
-    <canvas id="currentProductionConsumptionBarChart"></canvas>
-    <canvas id="dailyBalanceBarChart"></canvas>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
