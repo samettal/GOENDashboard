@@ -1,29 +1,8 @@
 // bar graph javascript functions
 document.addEventListener('DOMContentLoaded', function () {
 
-  const ctx1 = document.getElementById('currentProductionConsumptionBarChart');
-  const barChartCurrentProductionConsumption = new Chart(ctx1, {
-    type: 'bar',
-    data: {
-      labels: ['Production', 'Consumption'],
-      datasets: [{
-        label: 'by kW',
-        data: [0, 0],
-        backgroundColor: ['#4caf50', '#f44336'],
-        borderWidth: 1
-      }]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
-    }
-  });
-
-  const ctx2 = document.getElementById('last10ValuesProductionConsumptionLineChart');
-  const lineChartProduction = new Chart(ctx2, {
+  const ctx1 = document.getElementById('recentValuesLineChart');
+  const recentValuesLineChart = new Chart(ctx1, {
     type: 'line',
     data: {
       labels: [],
@@ -53,11 +32,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  const ctx4 = document.getElementById('dailyBalanceBarChart');
-  const barChartDailyBalance = new Chart(ctx4, {
+  const ctx2 = document.getElementById('yesterdayBalanceBarChart');
+  const yesterdayBalanceBarChart = new Chart(ctx2, {
     type: 'bar',
+
     data: {
-      labels: ['Balance'],
+      labels: [],
       datasets: [{
         label: 'Daily Balance by kW',
         data: [],
@@ -79,16 +59,13 @@ document.addEventListener('DOMContentLoaded', function () {
       const response = await fetch('/api/data');
       const data = await response.json();
 
-      barChartCurrentProductionConsumption.data.datasets[0].data = [data.production_value, data.consumption_value];
-      barChartCurrentProductionConsumption.update();
+      recentValuesLineChart.data.labels = data.last_10_timestamps
+      recentValuesLineChart.data.datasets[0].data = data.last_10_values_production
+      recentValuesLineChart.data.datasets[1].data = data.last_10_values_consumption
+      recentValuesLineChart.update();
 
-      lineChartProduction.data.datasets[0].data = data.last_10_values_production
-      lineChartProduction.data.labels = data.last_10_timestamps
-      lineChartProduction.data.datasets[1].data = data.last_10_values_consumption
-      lineChartProduction.update();
-
-      barChartDailyBalance.data.datasets[0].data = [data.daily_balance_value]
-      barChartDailyBalance.update();
+      yesterdayBalanceBarChart.data.datasets[0].data = [data.daily_balance_value]
+      yesterdayBalanceBarChart.update();
 
     } catch (error) {
       console.error("Error fetching data:", error);

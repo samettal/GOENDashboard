@@ -22,6 +22,33 @@ class DatabaseManager:
                         ORDER BY Timestamp DESC 
                         LIMIT 10;'''
 
+    SELECT_YESTERDAY_BALANCE_BETWEEN_0_AND_6 = '''SELECT SUM(Balance)
+                            FROM EnergyStatus
+                            WHERE 
+                            date(datetime(Timestamp, 'unixepoch', 'localtime')) = date('now', '-1 day')
+                            AND strftime('%H', datetime(Timestamp, 'unixepoch', 'localtime')) BETWEEN '00' AND '05';'''
+
+    SELECT_YESTERDAY_BALANCE_BETWEEN_6_AND_12 = '''SELECT SUM(Balance)
+                            FROM EnergyStatus
+                            WHERE 
+                            date(datetime(Timestamp, 'unixepoch', 'localtime')) = date('now', '-1 day')
+                            AND strftime('%H', datetime(Timestamp, 'unixepoch', 'localtime')) BETWEEN '06' AND '11';'''
+
+    SELECT_YESTERDAY_BALANCE_BETWEEN_12_AND_18 = '''SELECT SUM(Balance)
+                            FROM EnergyStatus
+                            WHERE 
+                            date(datetime(Timestamp, 'unixepoch', 'localtime')) = date('now', '-1 day')
+                            AND strftime('%H', datetime(Timestamp, 'unixepoch', 'localtime')) BETWEEN '12' AND '17';'''
+
+    SELECT_YESTERDAY_BALANCE_BETWEEN_18_AND_24 = '''SELECT SUM(Balance)
+                            FROM EnergyStatus
+                            WHERE 
+                            date(datetime(Timestamp, 'unixepoch', 'localtime')) = date('now', '-1 day')
+                            AND strftime('%H', datetime(Timestamp, 'unixepoch', 'localtime')) BETWEEN '18' AND '23';'''
+
+    SELECT_YESTERDAY_WHOLE_BALANCE = '''SELECT SUM(Balance) FROM EnergyStatus
+	                        WHERE date(datetime(Timestamp, 'unixepoch', 'localtime')) = date('now', '-1 day');'''
+
     def __init__(self):
         self.db_path = "EnergyDatabase.db"
 
@@ -54,3 +81,38 @@ class DatabaseManager:
             cur.execute(self.DAILY_BALANCE_VALUE)
 
         return cur.fetchall()[0][0]
+
+    def get_yesterday_balance_between_0_and_6(self):
+        with sqlite3.connect(self.db_path) as con:
+            cur = con.cursor()
+            cur.execute(self.SELECT_YESTERDAY_BALANCE_BETWEEN_0_AND_6)
+
+        return cur.fetchall()[0]
+
+    def get_yesterday_balance_between_6_and_12(self):
+        with sqlite3.connect(self.db_path) as con:
+            cur = con.cursor()
+            cur.execute(self.SELECT_YESTERDAY_BALANCE_BETWEEN_6_AND_12)
+
+        return cur.fetchall()[0]
+
+    def get_yesterday_balance_between_12_and_18(self):
+        with sqlite3.connect(self.db_path) as con:
+            cur = con.cursor()
+            cur.execute(self.SELECT_YESTERDAY_BALANCE_BETWEEN_12_AND_18)
+
+        return cur.fetchall()[0]
+
+    def get_yesterday_balance_between_18_and_24(self):
+        with sqlite3.connect(self.db_path) as con:
+            cur = con.cursor()
+            cur.execute(self.SELECT_YESTERDAY_BALANCE_BETWEEN_18_AND_24)
+
+        return cur.fetchall()[0]
+
+    def get_yesterday_whole_balance(self):
+        with sqlite3.connect(self.db_path) as con:
+            cur = con.cursor()
+            cur.execute(self.SELECT_YESTERDAY_WHOLE_BALANCE)
+
+        return cur.fetchall()[0]

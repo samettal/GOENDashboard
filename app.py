@@ -27,13 +27,22 @@ class FlaskApp:
         last_10_timestamps, last_10_values_production, last_10_values_consumption = self.db_manager.select_last_10_data()
         daily_balance = self.db_manager.get_daily_balance()
 
+        yesterday_balance_0_and_6 = self.db_manager.get_yesterday_balance_between_0_and_6()
+        yesterday_balance_6_and_12 = self.db_manager.get_yesterday_balance_between_6_and_12()
+        yesterday_balance_12_and_18 = self.db_manager.get_yesterday_balance_between_12_and_18()
+        yesterday_balance_18_and_24 = self.db_manager.get_yesterday_balance_between_18_and_24()
+        yesterday_whole_balance = self.db_manager.get_yesterday_whole_balance()
+        # yesterday_balance_values:list = [yesterday_balance_0_and_6[0], yesterday_balance_6_and_12[0],
+        #                                  yesterday_balance_12_and_18[0], yesterday_balance_18_and_24[0],
+        #                                  yesterday_whole_balance[0]]
+        yesterday_balance_values = [0, 1, 2, 3, 4]
+
         return jsonify({
-            "production_value": production_value,
-            "consumption_value": consumption_value,
             "last_10_timestamps": last_10_timestamps,
             "last_10_values_production": last_10_values_production,
             "last_10_values_consumption": last_10_values_consumption,
-            "daily_balance_value": daily_balance
+
+            "yesterday_balance_values": yesterday_balance_values,
         })
 
     def run(self, **kwargs):
