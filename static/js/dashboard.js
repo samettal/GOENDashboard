@@ -1,5 +1,6 @@
 // bar graph javascript functions
 document.addEventListener('DOMContentLoaded', function () {
+  Chart.defaults.font.size = 18;
 
   const ctx1 = document.getElementById('recentValuesLineChart');
   const recentValuesLineChart = new Chart(ctx1, {
@@ -48,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
         data: [],
         backgroundColor: [],
         borderColor: [],
-        borderWidth: 1
+        borderWidth: 3
       }]
     },
     options: {
