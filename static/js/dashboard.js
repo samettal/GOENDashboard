@@ -37,7 +37,13 @@ document.addEventListener('DOMContentLoaded', function () {
     type: 'bar',
 
     data: {
-      labels: [],
+      labels: [
+        '12 am - 6 am',
+        '6 am - 12 pm',
+        '12 pm - 6 pm',
+        '6 pm - 12 am',
+        'Yesterday Total'
+      ],
       datasets: [{
         label: 'Daily Balance by kW',
         data: [],
@@ -64,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
       recentValuesLineChart.data.datasets[1].data = data.last_10_values_consumption
       recentValuesLineChart.update();
 
-      yesterdayBalanceBarChart.data.datasets[0].data = [data.daily_balance_value]
+      yesterdayBalanceBarChart.data.datasets[0].data = data.yesterday_balance_values
       yesterdayBalanceBarChart.update();
 
     } catch (error) {
