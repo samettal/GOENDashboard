@@ -35,7 +35,6 @@ document.addEventListener('DOMContentLoaded', function () {
   const ctx2 = document.getElementById('yesterdayBalanceBarChart');
   const yesterdayBalanceBarChart = new Chart(ctx2, {
     type: 'bar',
-
     data: {
       labels: [
         '12 am - 6 am',
@@ -47,7 +46,8 @@ document.addEventListener('DOMContentLoaded', function () {
       datasets: [{
         label: 'Daily Balance by kW',
         data: [],
-        backgroundColor: ['#4caf50'],
+        backgroundColor: [],
+        borderColor: [],
         borderWidth: 1
       }]
     },
@@ -71,6 +71,13 @@ document.addEventListener('DOMContentLoaded', function () {
       recentValuesLineChart.update();
 
       yesterdayBalanceBarChart.data.datasets[0].data = data.yesterday_balance_values
+      yesterdayBalanceBarChart.data.datasets[0].backgroundColor = data.yesterday_balance_values.map(value => {
+         return value < 0 ? 'rgba(255, 99, 132, 0.2)' : 'rgba(75, 192, 192, 0.2)';
+      });
+      yesterdayBalanceBarChart.data.datasets[0].borderColor = data.yesterday_balance_values.map(value => {
+        return value < 0 ? 'rgb(255, 99, 132)' : 'rgb(75, 192, 192)';
+      });
+
       yesterdayBalanceBarChart.update();
 
     } catch (error) {
@@ -79,5 +86,6 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   updateCharts(); // initial function
+//  TODO: It is not neccessary to update yesterday's line chart in every 10 secs. This consumes much cpu.
   setInterval(updateCharts, 10000); // to fetch data in every 10 secs
 });
