@@ -22,8 +22,6 @@ class FlaskApp:
         return render_template("index.html")
 
     def current_data(self):
-        production_value = self.synthetic_value_generator.production_value
-        consumption_value = self.synthetic_value_generator.consumption_value
         last_10_timestamps, last_10_values_production, last_10_values_consumption = self.db_manager.select_last_10_data()
         daily_balance = self.db_manager.get_daily_balance()
 
@@ -36,12 +34,28 @@ class FlaskApp:
                                          yesterday_balance_12_and_18[0], yesterday_balance_18_and_24[0],
                                          yesterday_whole_balance[0]]
 
+        current_balance = last_10_values_production[-1] - last_10_values_consumption[-1]
+
+        last_1_hour_production, last_1_hour_consumption = self.db_manager.get_last_1_hour_data()
+
+        today_production, today_consumption = self.db_manager.get_today_data()
+
+        last_24_hours_production, last_24_hours_consumption = self.db_manager.get_last_24_hours_data()
+
         return jsonify({
             "last_10_timestamps": last_10_timestamps,
             "last_10_values_production": last_10_values_production,
             "last_10_values_consumption": last_10_values_consumption,
 
             "yesterday_balance_values": yesterday_balance_values,
+
+            "current_balance": current_balance,
+            "last_1_hour_production": last_1_hour_production,
+            "last_1_hour_consumption": last_1_hour_consumption,
+            "today_production": today_production,
+            "today_consumption": today_consumption,
+            "last_24_hours_production": last_24_hours_production,
+            "last_24_hours_consumption": last_24_hours_consumption,
         })
 
     def run(self, **kwargs):

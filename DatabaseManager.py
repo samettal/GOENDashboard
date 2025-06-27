@@ -18,9 +18,9 @@ class DatabaseManager:
 
     # This select query selects last 10 values by date and time (select the newest values).
     SELECT_LAST_10_DATA = '''SELECT strftime('%H:%M:%S', Timestamp, 'unixepoch', 'localtime'), Production, Consumption 
-                        FROM EnergyStatus 
-                        ORDER BY Timestamp DESC 
-                        LIMIT 10;'''
+                            FROM EnergyStatus 
+                            ORDER BY Timestamp DESC 
+                            LIMIT 10;'''
 
     SELECT_YESTERDAY_BALANCE_BETWEEN_0_AND_6 = '''SELECT SUM(Balance)
                             FROM EnergyStatus
@@ -48,6 +48,17 @@ class DatabaseManager:
 
     SELECT_YESTERDAY_WHOLE_BALANCE = '''SELECT SUM(Balance) FROM EnergyStatus
 	                        WHERE date(datetime(Timestamp, 'unixepoch', 'localtime')) = date('now', '-1 day');'''
+
+    SELECT_LAST_1_HOUR_PRODUCTION_CONSUMPTION = '''SELECT sum(Production), sum(Consumption) FROM EnergyStatus 
+                            WHERE Timestamp > strftime('%s', 'now', '-1 hour');'''
+
+    SELECT_TODAY_PRODUCTION_CONSUMPTION = '''SELECT sum(Production), sum(Consumption) FROM EnergyStatus 
+	                        WHERE date(datetime(Timestamp, 'unixepoch', 'localtime')) = date('now')
+	                        AND strftime('%H', datetime(Timestamp, 'unixepoch', 'localtime')) BETWEEN '00' AND '23';'''
+
+    SELECT_LAST_24_HOURS_PRODUCTION_CONSUMPTION = '''SELECT sum(Production), sum(Consumption)
+                            FROM EnergyStatus
+                            WHERE Timestamp >= strftime('%s', 'now') - 86400;'''
 
     def __init__(self):
         self.db_path = "EnergyDatabase.db"
@@ -114,5 +125,26 @@ class DatabaseManager:
         with sqlite3.connect(self.db_path) as con:
             cur = con.cursor()
             cur.execute(self.SELECT_YESTERDAY_WHOLE_BALANCE)
+
+        return cur.fetchall()[0]
+
+    def get_last_1_hour_data(self):
+        with sqlite3.connect(self.db_path) as con:
+            cur = con.cursor()
+            cur.execute(self.SELECT_LAST_1_HOUR_PRODUCTION_CONSUMPTION)
+
+        return cur.fetchall()[0]
+
+    def get_today_data(self):
+        with sqlite3.connect(self.db_path) as con:
+            cur = con.cursor()
+            cur.execute(self.SELECT_TODAY_PRODUCTION_CONSUMPTION)
+
+        return cur.fetchall()[0]
+
+    def get_last_24_hours_data(self):
+        with sqlite3.connect(self.db_path) as con:
+            cur = con.cursor()
+            cur.execute(self.SELECT_LAST_24_HOURS_PRODUCTION_CONSUMPTION)
 
         return cur.fetchall()[0]
